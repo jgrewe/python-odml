@@ -1,9 +1,9 @@
 #-*- coding: utf-8
 import types
-import base
-import format
-import terminology
-from tools.doc_inherit import *
+import odml.base as base
+import odml.format as format
+import odml.terminology as terminology
+from odml.tools.doc_inherit import *
 
 class Document(base._baseobj):
     pass

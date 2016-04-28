@@ -12,6 +12,9 @@ import binascii
 import hashlib
 from enum import Enum
 
+if sys.version_info < (3,):
+    str = unicode
+
 class DType(str, Enum):
     string = 'string'
     text = 'text'
@@ -95,7 +98,7 @@ def get(string, dtype=None, encoding=None):
     convert *string* to the corresponding *dtype*
     """
     if not dtype: return str_get(string)
-    if dtype.endswith("-tuple"): # special case, as the count-number is included in the type-name
+    if dtype.endswith("-tuple"):  # special case, as the count-number is included in the type-name
         return tuple_get(string)
     if dtype == "binary":
         return binary_get(string, encoding)
@@ -112,8 +115,12 @@ def set(value, dtype=None, encoding=None):
         return tuple_set(value)
     if dtype == "binary":
         return binary_set(value, encoding)
-    if type(value) in (str, unicode):
-        return str_set(value)
+    if sys.version_info < (3,):
+        if type(value) in (str, unicode):
+            return str_set(value)
+    else:
+        if type(value) in str:
+            return str_set(value)
     return self.get(dtype + "_set", str_set)(value)
 
 
@@ -132,12 +139,12 @@ def float_get(string):
 
 
 def str_get(string):
-    return unicode(string)
+    return str(string)
 
 
 def str_set(value):
     try:
-        return unicode(value)
+        return str(value)
     except Exception as ex:
         fail = ex
         raise fail

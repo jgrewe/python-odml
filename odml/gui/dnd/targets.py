@@ -1,5 +1,5 @@
 import odml
-from .. import commands
+from odml.gui import commands
 
 class ActionDrop(object):
     """

@@ -1,7 +1,7 @@
 import odml.gui.treemodel.mixin #this also provides event functionality, and we also test tree-based event passing
 import odml.tools.event
 import unittest
-import samplefile
+import test.samplefile as samplefile
 import odml
 
 class TestEvents(unittest.TestCase):

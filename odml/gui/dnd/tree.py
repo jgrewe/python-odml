@@ -1,7 +1,7 @@
 import gtk
 
-import drag
-import drop
+import odml.gui.dnd.drag as drag
+import odml.gui.dnd.drop as drop
 
 class Action(object):
     """

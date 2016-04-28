@@ -1,9 +1,9 @@
 import gtk
 
-import tree
-from ..DocumentRegistry import DocumentRegistry
-from .. import commands
-from targets import ActionDrop
+import odml.gui.dnd.tree as tree
+from odml.gui.DocumentRegistry import DocumentRegistry
+from odml.gui import commands
+from odml.gui.dnd.targets import ActionDrop
 
 class OdmlTreeDropTarget(tree.TreeDropTarget):
     """
@@ -92,7 +92,7 @@ class OdmlDrop(ActionDrop, OdmlTreeDropTarget):
         if data is not None:
             doc, src = self.get_source(data)
             if src is dst and not action.copy: # allow to copy
-                print "can't drop to myself"
+                print("can't drop to myself")
                 return False
         return self.odml_can_drop(action, dst, position, src)
 

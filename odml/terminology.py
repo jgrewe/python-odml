@@ -2,7 +2,7 @@
 Handles (deferred) loading of terminology data and access to it
 for odML documents
 """
-import tools.xmlparser
+import odml.tools.xmlparser
 
 import urllib2
 import threading
@@ -24,12 +24,12 @@ def cache_load(url):
             if not os.path.exists(cache_dir):
                 raise
     cache_file = os.path.join(cache_dir, filename)
-    if not os.path.exists(cache_file) \
-        or datetime.datetime.fromtimestamp(os.path.getmtime(cache_file)) < datetime.datetime.now() - CACHE_AGE:
+    if not os.path.exists(cache_file) or \
+       datetime.datetime.fromtimestamp(os.path.getmtime(cache_file)) < datetime.datetime.now() - CACHE_AGE:
             try:
-                data = urllib2.urlopen(url).read() # read data first, so we don't have empty files on error
-            except Exception, e:
-                print "failed loading '%s': %s" % (url, e.message)
+                data = urllib2.urlopen(url).read()  # read data first, so we don't have empty files on error
+            except Exception as e:
+                print( "failed loading '%s': %s" % (url, e.message))
                 return
             fp = open(cache_file, "w")
             fp.write(data)
@@ -60,14 +60,14 @@ class Terminologies(dict):
         # if url.startswith("http"): return None
         fp = cache_load(url)
         if fp is None:
-            print "did not successfully load '%s'" % url
+            print("did not successfully load '%s'" % url)
             return
         try:
-            term = tools.xmlparser.XMLReader(filename=url, ignore_errors=True).fromFile(fp)
+            term = odml.tools.xmlparser.XMLReader(filename=url, ignore_errors=True).fromFile(fp)
             term.finalize()
-        except tools.xmlparser.ParserException, e:
-            print "Failed to load %s due to parser errors" % url
-            print ' "%s"' % e.message
+        except odml.tools.xmlparser.ParserException as e:
+            print("Failed to load %s due to parser errors" % url)
+            print(' "%s"' % e.message)
             term = None
         self[url] = term
         return term

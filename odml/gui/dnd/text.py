@@ -1,11 +1,13 @@
 import gtk
 
-import odmldrop
-import tree
-from targets import *
-
+import odml.gui.dnd.odmldrop as odmldrop
+import odml.gui.dnd.tree as tree
+from odml.gui.dnd.targets import *
 import odml
 import odml.tools.xmlparser as xmlparser
+import sys
+if sys.version_info < (3,):
+    str = unicode
 
 class TextDrop(odmldrop.OdmlTreeDropTarget):
     """
@@ -91,7 +93,7 @@ class TextDrag(odmldrop.OdmlDrag):
     using the DeleteObject-command
     """
     def odml_get_data(self, action, obj):
-        return unicode(xmlparser.XMLWriter(obj))
+        return str(xmlparser.XMLWriter(obj))
 
     def odml_delete_data(self, obj):
         return commands.DeleteObject(obj=obj)

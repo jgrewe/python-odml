@@ -1,4 +1,8 @@
 import gtk, gobject
+import sys
+if sys.version_info < (3,):
+    range = xrange
+
 debug = lambda x: 0
 
 class ColumnMapper(object):
@@ -21,7 +25,7 @@ class ColumnMapper(object):
         return self._col_map.iteritems()
 
     def sort_iteritems(self):
-        for i in xrange(len(self.rev_map)):
+        for i in range(len(self.rev_map)):
             yield self.rev_map[i], self._col_map[self.rev_map[i]]
 
     def name_by_column(self, column):

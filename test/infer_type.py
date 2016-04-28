@@ -2,7 +2,10 @@ import unittest
 from datetime import datetime as dt, date, time
 from odml import Value, Property, Section, Document
 from odml.tools.xmlparser import XMLReader, XMLWriter
+import sys
 
+if sys.version_info < (3,):
+    str = unicode
 
 class TestInferType(unittest.TestCase):
 
@@ -62,17 +65,17 @@ class TestInferType(unittest.TestCase):
         sec.append(Property("timeprop", dt.now().time()))
         sec.append(Property("boolprop", True))
 
-        str_doc = unicode(XMLWriter(doc))
+        str_doc = str(XMLWriter(doc))
         new_doc = XMLReader().fromString(str_doc)
         new_sec = new_doc.sections[0]
 
         v = new_sec.properties["strprop"].value
         assert(v.dtype == "string")
-        assert(type(v.data) == unicode)
+        assert(type(v.data) == str)
 
         v = new_sec.properties["txtprop"].value
         assert(v.dtype == "text")
-        assert(type(v.data) == unicode)
+        assert(type(v.data) == str)
 
         v = new_sec.properties["intprop"].value
         assert(v.dtype == "int")

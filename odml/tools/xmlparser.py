@@ -10,7 +10,7 @@ Parses odML files. Can be invoked standalone:
 
 import odml
 from .. import format
-from dumper import dumpSection
+from odml.tools.dumper import dumpSection
 from lxml import etree as ET
 from lxml.builder import E
 
@@ -19,7 +19,7 @@ from lxml import _elementpath as _dummy
 
 import sys
 
-from StringIO import StringIO
+# from StringIO import StringIO
 
 format.Document._xml_name = "odML"
 format.Section._xml_name = "section"

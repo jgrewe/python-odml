@@ -1,17 +1,17 @@
 #-*- coding: utf-8
-import base
-import format
-import terminology
-import mapping
-from property import Property # this is supposedly ok, as we only use it for an isinstance check
+import odml.base
+import odml.format
+import odml.terminology
+import odml.mapping
+from odml.property import Property # this is supposedly ok, as we only use it for an isinstance check
                               # it MUST however not be used to create any Property objects
-from tools.doc_inherit import *
+from odml.tools.doc_inherit import *
 
-class Section(base._baseobj):
+class Section(odml.base._baseobj):
     pass
 
 @allow_inherit_docstring
-class BaseSection(base.sectionable, mapping.mapableSection, Section):
+class BaseSection(odml.base.sectionable, odml.mapping.mapableSection, Section):
     """An odML Section"""
     type       = None
     id         = None
@@ -27,7 +27,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
     def __init__(self, name, type="undefined", parent=None, definition=None, mapping=None):
         self._parent = parent
         self._name = name
-        self._props = base.SmartList()
+        self._props = odml.base.SmartList()
         self._definition = definition
         self._mapping = mapping
         super(BaseSection, self).__init__()
@@ -68,13 +68,13 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         else:
             url, path = new_value, None
 
-        terminology.deferred_load(url)
+        odml.terminology.deferred_load(url)
 
         if self.parent is None:
             self._include = new_value
             return
 
-        term = terminology.load(url)
+        term = odml.terminology.load(url)
         new_section = term.get_section_by_path(path) if path is not None else term.sections[0]
 
         if self._include is not None:
@@ -143,12 +143,12 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
     @property
     def properties(self):
         """the list of all properties contained in this section"""
-    	return self._props
+        return self._props
 
     @property
     def sections(self):
         """the list of all child-sections of this section"""
-    	return self._sections
+        return self._sections
 
     @property
     def parent(self):
@@ -165,17 +165,17 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
             return self.parent.get_repository()
         return super(BaseSection, self).repository
 
-    @base.sectionable.repository.setter
+    @odml.base.sectionable.repository.setter
     def repository(self, url):
         if self._active_mapping is not None:
             raise ValueError("cannot edit repsitory while a mapping is active")
-        base.sectionable.repository.fset(self, url)
+        odml.base.sectionable.repository.fset(self, url)
 
     @inherit_docstring
     def get_terminology_equivalent(self):
         repo = self.get_repository()
         if repo is None: return None
-        term = terminology.load(repo)
+        term = odml.terminology.load(repo)
         if term is None: return None
         return term.find_related(type=self.type)
 
@@ -185,7 +185,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         """
         return self._merged
 
-    @mapping.remapable_append
+    @odml.mapping.remapable_append
     def append(self, obj):
         """append a Section or Property"""
         if isinstance(obj, Section):
@@ -197,7 +197,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         else:
             raise ValueError("Can only append sections and properties")
 
-    @mapping.remapable_insert
+    @odml.mapping.remapable_insert
     def insert(self, position, obj):
         """insert a Section or Property at the respective position"""
         if isinstance(obj, Section):
@@ -209,7 +209,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         else:
             raise ValueError("Can only insert sections and properties")
 
-    @mapping.remapable_remove
+    @odml.mapping.remapable_remove
     def remove(self, obj):
         if isinstance(obj, Section): # TODO make sure this is not compare based
             self._sections.remove(obj)
@@ -219,7 +219,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
             obj._section = None
             # also: TODO unmap the property
         else:
-            raise ValueError, "Can only remove sections and properties"
+            raise ValueError("Can only remove sections and properties")
 
     def __iter__(self):
         """iterate over each section and property contained in this section"""
@@ -239,7 +239,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         """
         obj = super(BaseSection, self).clone(children)
 
-        obj._props = base.SmartList()
+        obj._props = odml.base.SmartList()
         if children:
             for p in self._props:
                 obj.append(p.clone())
@@ -296,7 +296,7 @@ class BaseSection(base.sectionable, mapping.mapableSection, Section):
         to the linked object
         """
         if self == section:
-            raise RuntimeException("cannot unmerge myself?")
+            raise odml.RuntimeException("cannot unmerge myself?")
             return #self._sections
         removals = []
         for obj in section:

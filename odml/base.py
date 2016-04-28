@@ -4,9 +4,9 @@ collects common base functionality
 """
 import doc
 import posixpath
-import terminology
-import mapping
-from tools.doc_inherit import *
+import odml.terminology
+import odml.mapping
+from odml.tools.doc_inherit import *
 
 class _baseobj(object):
     pass
@@ -139,7 +139,7 @@ class SmartList(SafeList):
             super(SmartList, self).append(obj)
 
 @allow_inherit_docstring
-class sectionable(baseobject, mapping.mapped):
+class sectionable(baseobject, odml.mapping.mapped):
     def __init__(self):
         self._sections = SmartList()
         self._repository = None
@@ -160,7 +160,7 @@ class sectionable(baseobject, mapping.mapped):
         """the list of sections contained in this section/document"""
         return self._sections
 
-    @mapping.remapable_insert
+    @odml.mapping.remapable_insert
     def insert(self, position, section):
         """
         adds the section to the section-list and makes this document the section’s parent
@@ -170,7 +170,7 @@ class sectionable(baseobject, mapping.mapped):
         self._sections.append(section)
         section._parent = self
 
-    @mapping.remapable_append
+    @odml.mapping.remapable_append
     def append(self, section):
         """adds the section to the section-list and makes this document the section’s parent"""
         self._sections.append(section)
@@ -180,7 +180,7 @@ class sectionable(baseobject, mapping.mapped):
     def reorder(self, new_index):
         return self._reorder(self.parent.sections, new_index)
 
-    @mapping.remapable_remove
+    @odml.mapping.remapable_remove
     def remove(self, section):
         """removes the specified child-section"""
         self._sections.remove(section)
@@ -499,7 +499,7 @@ class sectionable(baseobject, mapping.mapped):
         if not url: url = None
         self._repository = url
         if url:
-            terminology.deferred_load(url)
+            odml.terminology.deferred_load(url)
 
     def get_repository(self):
         """

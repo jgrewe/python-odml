@@ -1,7 +1,7 @@
 import odml
-import event
-import weakmeth, weakref
-import nodes
+import odml.tools.event as event
+import odml.tools.weakmeth as weakmeth
+import odml.tools.nodes as nodes
 
 # events are required for proxy objects 
 odml.setMinimumImplementation('event')
@@ -466,7 +466,7 @@ class MappedSection(EqualityBaseProxy, HookProxy, ReadOnlySection):
     def remove(self, obj):
         # we should only contain proxy objects (unless a link is present TODO)
         if not isinstance(obj, Proxy):
-            print "%s should only contain proxy objects, but then look at this" % repr(self), obj
+            print("%s should only contain proxy objects, but then look at this" % repr(self), obj)
             obj = self.contains(obj)
         assert isinstance(obj, Proxy)
 

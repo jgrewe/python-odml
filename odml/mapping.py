@@ -1,5 +1,4 @@
-import odml
-import terminology
+import odml.terminology as terminology
 import weakref
 from functools import wraps
 
@@ -230,7 +229,7 @@ def create_mapping(doc):
     2. afterwards map all their properties
     """
     global proxy # we install the proxy only late time
-    import tools.proxy as proxy
+    import odml.tools.proxy as proxy
     mdoc = proxy.DocumentProxy(doc)
     # TODO copy attributes, but also make this generic
     mdoc._proxy_obj = doc

@@ -3,6 +3,9 @@ import unittest
 import odml.types as typ
 import odml
 import datetime
+import sys
+if sys.version_info < (3,):
+    range = xrange
 
 class TestTypes(unittest.TestCase):
     def setUp(self):
@@ -40,7 +43,7 @@ class TestTypes(unittest.TestCase):
         self.assertEqual(v.checksum, 'md5$d41d8cd98f00b204e9800998ecf8427e')
 
     def test_8bit_binary(self):
-        data = ''.join([chr(i) for i in xrange(256)])
+        data = ''.join([chr(i) for i in range(256)])
         v = odml.Value(data, dtype="binary")
 
         v.encoder = "base64"

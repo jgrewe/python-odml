@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import gtk
-from treemodel.SectionModel import SectionModel
-from SectionView import SectionView
-from ScrolledWindow import ScrolledWindow
+from odml.gui.treemodel.SectionModel import SectionModel
+from odml.gui.SectionView import SectionView
+from odml.gui.ScrolledWindow import ScrolledWindow
 import odml
 import odml.terminology as terminology
 

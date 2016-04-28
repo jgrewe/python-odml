@@ -2,7 +2,7 @@ import odml.gui.treemodel.mixin #this also provides event functionality, and we 
 import odml.tools.event
 
 import unittest
-from mapping import parse
+from test.mapping import parse
 
 import odml
 from odml import doc, section, property, value

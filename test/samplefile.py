@@ -6,12 +6,16 @@ import re
 from odml.tools import xmlparser
 from odml.tools import jsonparser
 from odml.tools import dumper
+import sys
+if sys.version_info < (3,):
+    range = xrange
+    str = unicode
 
 def dump(doc, filename):
     """
     helper function to dump a document for debugging purposes
     """
-    open(filename, "w").write(unicode(xmlparser.XMLWriter(doc)))
+    open(filename, "w").write(str(xmlparser.XMLWriter(doc)))
     
 def parse(data):
     """
@@ -44,7 +48,7 @@ def parse(data):
         try:
             m = pat.match(line).groupdict()
         except:
-            print "error parsing", repr(line)
+            print("error parsing", repr(line))
             raise
         if m['type'] is None:
             obj = odml.Property(name=m['name'], value="[val]")
@@ -62,18 +66,18 @@ def parse(data):
 class SampleFileCreator:
     def create_document(self):
         doc = odml.Document()
-        for i in xrange(3):
+        for i in range(3):
             doc.append(self.create_section("sec %d" % i))
         return doc
 
     def create_section(self, name, depth=0):
         s = odml.Section(name=name, type=name.replace("sec", "type"))
         if depth < 1:
-            for i in xrange(2):
+            for i in range(2):
                 s.append(self.create_section("%s,%d" % (name, i), depth=depth+1))
 
         if name.endswith("1"):
-            for i in xrange(3):
+            for i in range(3):
                 s.append(self.create_property("%s:%d" % (name, i)))
 
         return s
@@ -122,7 +126,7 @@ class SampleFileOperationTest(unittest.TestCase):
 
     def test_xml_writer_version(self):
         doc = odml.Document()
-        val = unicode(xmlparser.XMLWriter(doc))
+        val = str(xmlparser.XMLWriter(doc))
         self.assertIn('version="%s"' % xmlparser.XML_VERSION, val)
         doc = xmlparser.XMLReader().fromString(val)
         # this test is switched off until the XML versioning support is implemented
@@ -142,7 +146,7 @@ class SampleFileOperationTest(unittest.TestCase):
             (jsonparser.JSONWriter, jsonparser.JSONReader)]:
         
             doc = Writer(self.doc)
-            doc = StringIO.StringIO(unicode(doc))
+            doc = StringIO.StringIO(str(doc))
             doc = Reader().fromFile(doc)
             self.assertEqual(doc, self.doc)
 #        for a,b in zip(doc.sections, self.doc.sections):

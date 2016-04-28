@@ -6,8 +6,8 @@ import odml.gui.treemodel.mixin
 import odml.gui.commands as commands
 import odml.terminology
 import odml.tools.dumper as dumper
-import samplefile
-from samplefile import parse
+import test.samplefile as samplefile
+from test.samplefile import parse
 
 import odml.mapping as mapping
 
@@ -35,10 +35,10 @@ class TestMapping(unittest.TestCase):
             map = src
         if map != dst:
             dumper.dumpDoc(map)
-            print "---- vs ----"
+            print("---- vs ----")
             dumper.dumpDoc(dst)
         self.assertEqual(map, dst)
-        self.assertEqual(dst, map) # do the vice versa test too
+        self.assertEqual(dst, map)  # do the vice versa test too
         return map
 
     def test_parse(self):

@@ -1,4 +1,7 @@
-import doc, section, property, value
+import odml.doc as doc
+import odml.section as section
+import odml.property as property
+import odml.value as value
 from odml.types import DType
 
 # the original property-function is overwritten

@@ -6,7 +6,7 @@ import odml.gui.dnd.odmldrop as odmldrop
 import odml.gui.dnd.text as text
 import odml.gui.dnd.tree as tree
 from odml.gui.DocumentRegistry import DocumentRegistry
-import samplefile
+import test.samplefile as samplefile
 import gtk
 
 MOVE = gtk.gdk.ACTION_MOVE
@@ -67,7 +67,7 @@ class TestDND(unittest.TestCase):
 
         dropper = text.TextGenericDropForSectionTV(exec_func=self.execute)
         data = '<section name="s2"><type>t2</type></section>'
-        print dropper.odml_tree_receive_data(self.MOVE, sec, -1, data)
+        print(dropper.odml_tree_receive_data(self.MOVE, sec, -1, data))
 
         dst = samplefile.parse("""
         s1[t1]

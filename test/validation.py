@@ -1,5 +1,5 @@
 import unittest
-import samplefile
+import test.samplefile as samplefile
 import odml
 import odml.validation
 import odml.terminology

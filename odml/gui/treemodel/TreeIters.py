@@ -1,4 +1,4 @@
-import GenericIter
+import odml.gui.treemodel.GenericIter as GenericIter
 
 class PropIter(GenericIter.GenericIter):
     """

@@ -1,19 +1,19 @@
 #-*- coding: utf-8
 
-import base
-import format
-import mapping
-import value as odml_value
+import odml.base
+import odml.format
+import odml.mapping
+import odml.value as odml_value
 import odml
-from tools.doc_inherit import *
+from odml.tools.doc_inherit import *
 
 
-class Property(base._baseobj):
+class Property(odml.base._baseobj):
     pass
 
 
 @allow_inherit_docstring
-class BaseProperty(base.baseobject, mapping.mapableProperty, Property):
+class BaseProperty(odml.base.baseobject, odml.mapping.mapableProperty, Property):
     """An odML Property"""
     _format = format.Property
 
@@ -173,7 +173,7 @@ class BaseProperty(base.baseobject, mapping.mapableProperty, Property):
         """
         reinitialize the list of values with an empty list
         """
-        self._values = base.SafeList()
+        self._values = odml.base.SafeList()
 
     def merge(self, property):
         """stub that doesn't do anything for this class"""

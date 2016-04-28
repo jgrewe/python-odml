@@ -2,7 +2,7 @@ import unittest
 
 import odml.gui.treemodel.mixin
 import odml.gui.commands as commands
-import samplefile
+import test.samplefile as samplefile
 
 class TestLinks(unittest.TestCase):
     def setUp(self):
