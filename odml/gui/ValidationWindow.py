@@ -1,8 +1,7 @@
 import gtk
-
-import commands
-from ScrolledWindow import ScrolledWindow
-from TreeView import TreeView
+import odml.gui.commands as commands
+from odml.gui.ScrolledWindow import ScrolledWindow
+from odml.gui.TreeView import TreeView
 COL_PATH = 0
 COL_INDEX = 1
 COL_DESC = 2
@@ -101,6 +100,6 @@ if __name__=="__main__":
     tab = Tab()
     tab.document.validation_result = Validation(tab.document)
     for err in tab.document.validation_result.errors:
-        print err.path, err.msg
+        print(err.path, err.msg)
     x = ValidationWindow(tab)
     gtk.mainloop()

@@ -1,5 +1,5 @@
 import gtk
-import commands
+import odml.gui.commands as commands
 
 class TreeView(object):
     """

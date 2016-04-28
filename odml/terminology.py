@@ -3,11 +3,15 @@ Handles (deferred) loading of terminology data and access to it
 for odML documents
 """
 import odml.tools.xmlparser
-
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import threading
-
-import os, tempfile, md5, datetime
+import os
+import tempfile
+import hashlib.md5 as md5
+import datetime
 
 CACHE_AGE = datetime.timedelta(days=1)
 def cache_load(url):

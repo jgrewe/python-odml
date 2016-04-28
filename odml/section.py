@@ -3,8 +3,8 @@ import odml.base
 import odml.format
 import odml.terminology
 import odml.mapping
-from odml.property import Property # this is supposedly ok, as we only use it for an isinstance check
-                              # it MUST however not be used to create any Property objects
+from odml.property import Property  # this is supposedly ok, as we only use it for an isinstance check
+                                    # it MUST however not be used to create any Property objects
 from odml.tools.doc_inherit import *
 
 class Section(odml.base._baseobj):

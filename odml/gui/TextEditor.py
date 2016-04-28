@@ -1,7 +1,6 @@
 import gtk
-
-import commands
-from ScrolledWindow import ScrolledWindow
+import odml.gui.commands as commands
+from odml.gui.ScrolledWindow import ScrolledWindow
 
 class TextEditor(gtk.Window):
     def __init__(self, obj, attr):
@@ -22,7 +21,6 @@ class TextEditor(gtk.Window):
         self.show_all()
 
     def on_close(self, window):
-        import commands
         buffer = self.text.get_buffer()
         start, end = buffer.get_bounds()
         text = buffer.get_text(start, end)
@@ -37,11 +35,11 @@ if __name__=="__main__":
         _a = "no text"
         @property
         def a(self):
-            print "read prop a"
+            print("read prop a")
             return self._a
         @a.setter
         def a(self, new_value):
-            print "set a to ", repr(new_value)
+            print("set a to ", repr(new_value))
             self._a = new_value
 
     x = TextEditor(A(), "a")

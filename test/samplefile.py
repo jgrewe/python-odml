@@ -140,8 +140,8 @@ class SampleFileOperationTest(unittest.TestCase):
             os.unlink(path)
 
     def test_restore(self):
-        import StringIO
-        for Writer,Reader in [
+        from io import StringIO
+        for Writer, Reader in [
             (xmlparser.XMLWriter, xmlparser.XMLReader),
             (jsonparser.JSONWriter, jsonparser.JSONReader)]:
         

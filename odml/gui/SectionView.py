@@ -1,12 +1,12 @@
 import gtk
-import commands
+import odml.gui.commands as commands
 import odml
-from TreeView import TerminologyPopupTreeView
-from DragProvider import DragProvider
+from odml.gui.TreeView import TerminologyPopupTreeView
+from odml.gui.DragProvider import DragProvider
 
-from dnd.targets import ValueDrop, PropertyDrop, SectionDrop
-from dnd.odmldrop import OdmlDrag, OdmlDrop
-from dnd.text import TextDrag, TextDrop, TextGenericDropForSectionTV
+from odml.gui.dnd.targets import ValueDrop, PropertyDrop, SectionDrop
+from odml.gui.dnd.odmldrop import OdmlDrag, OdmlDrop
+from odml.gui.dnd.text import TextDrag, TextDrop, TextGenericDropForSectionTV
 
 class SectionView(TerminologyPopupTreeView):
     """
@@ -73,12 +73,13 @@ class SectionView(TerminologyPopupTreeView):
         else:
             obj.merge()
 
-    def add_section(self, widget, (obj, section)):
+    def add_section(self, widget, obj_section):
         """
         popup menu action: add section
 
         add a section to the selected section (or document if None selected)
         """
+        obj, section = obj_section
         if section is None:
             section = odml.Section(name="unnamed section")
         else:
